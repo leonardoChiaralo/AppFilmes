@@ -1,4 +1,4 @@
-﻿namespace Alura.Filmes;
+﻿namespace AppFilmes.Modelos;
 
 class Artista
 {

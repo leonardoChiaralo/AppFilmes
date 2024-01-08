@@ -1,4 +1,4 @@
-﻿using Alura.Filmes;
+﻿using AppFilmes.Modelos;
 
 Filme ronins = new("47 Ronins")
 {
@@ -96,6 +96,7 @@ void ExibirMenu()
     Console.WriteLine("Digite 5 para associar um artista a um filme;");
     Console.WriteLine("Digite 6 para exibir o elenco de um filme;");
     Console.WriteLine("Digite 7 para exibir a filmografia de um artista;");
+    Console.WriteLine("Digite 8 para registrar uma nota a um filme;");
     Console.WriteLine("Digite 0 para sair.\n");
 
     Console.Write("Digita a opção escolhida: ");
@@ -126,6 +127,9 @@ void ExibirMenu()
             break;
         case 7:
             ExibirFilmografia();
+            break;
+        case 8:
+            AvaliarFilme();
             break;
         default:
             Console.Write("\nOpção inválida!");
@@ -316,6 +320,29 @@ void ExibirFilmografia()
         Console.Clear();
         ExibirMenu();
     }
+}
+
+void AvaliarFilme()
+{
+    Console.Clear();
+    ExibirTitulo("Avaliação de filmes");
+    Console.Write("Digite o nome do filme que deseja avaliar: ");
+    string nomeFilme = Console.ReadLine()!;
+    if (filmes.ContainsKey(nomeFilme))
+    {
+        Console.Write($"Digite uma para o filme {nomeFilme}: ");
+        Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
+        Filme filme = filmes[nomeFilme];
+        filme.AdicionarNota(nota);
+        Console.WriteLine("\nFilme avaliado com sucesso!");
+    } else
+    {
+        Console.WriteLine("\nEsse filme ainda não foi registrado!");
+    }
+
+    Thread.Sleep(2000);
+    Console.Clear();
+    ExibirMenu();
 }
 
 ExibirMenu();

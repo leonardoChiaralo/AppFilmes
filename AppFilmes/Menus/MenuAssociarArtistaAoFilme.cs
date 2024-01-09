@@ -18,8 +18,8 @@ internal class MenuAssociarArtistaAoFilme : Menu
             {
                 Artista artista = artistas[nomeArtista];
                 Filme filme = filmes[nomeFilme];
-                filme.AdicionarArtista(new Artista(artista.Nome) { Idade = artista.Idade });
-                artista.AdicionarFilme(new Filme(filme.Titulo) { Duracao = filme.Duracao });
+                filme.AdicionarArtista(artista) ;
+                artista.AdicionarFilme(filme);
                 Console.Write("\nArtista associado com sucesso!");
             }
             else

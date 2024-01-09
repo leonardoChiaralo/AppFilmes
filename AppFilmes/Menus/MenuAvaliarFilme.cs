@@ -12,7 +12,7 @@ internal class MenuAvaliarFilme : Menu
         string nomeFilme = Console.ReadLine()!;
         if (filmes.ContainsKey(nomeFilme))
         {
-            Console.Write($"Digite uma para o filme {nomeFilme}: ");
+            Console.Write($"Digite uma nota para o filme {nomeFilme}: ");
             Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
             Filme filme = filmes[nomeFilme];
             filme.AdicionarNota(nota);

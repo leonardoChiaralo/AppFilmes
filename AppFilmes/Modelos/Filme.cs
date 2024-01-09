@@ -16,7 +16,7 @@ class Filme
             else return notas.Average(a => a.Nota);
         }
     }
-    public string Detalhes => $"O filme {Titulo} tem duração de {Duracao} minutos, com avaliação {Media}.";
+    public string Detalhes => $"\nO filme {Titulo} tem duração de {Duracao} minutos, com avaliação {Media}.";
 
     private List<Artista> elenco = new List<Artista>();
     private List<Avaliacao> notas = new List<Avaliacao>();
@@ -33,12 +33,12 @@ class Filme
 
     public void ExibirElenco()
     {
-        Console.WriteLine("\nLISTA:");
+        Console.WriteLine("\nELENCO:");
         if (elenco.Count > 0 )
         {
             foreach (Artista artista in elenco)
             {
-                Console.WriteLine($"Artista: {artista.Nome};\n{artista.Detalhes}\n");
+                Console.WriteLine($"{artista.Nome};");
             }
         } else
         {

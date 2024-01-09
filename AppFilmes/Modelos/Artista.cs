@@ -9,7 +9,7 @@ class Artista
 
     public string Nome { get; }
     public int Idade { get; set; }
-    public string Detalhes => $"O artista {Nome} tem {Idade} anos.";
+    public string Detalhes => $"\n{Nome} tem {Idade} anos.";
 
     private List<Filme> filmesAtuados { get; set; } = new List<Filme>();
 
@@ -20,12 +20,12 @@ class Artista
 
     public void ExibirFilmesAtuados()
     {
-        Console.WriteLine("\nLISTA:");
+        Console.WriteLine("\nFILMOGRAFIA:");
         if (filmesAtuados.Count > 0)
         {
             foreach (Filme filme in filmesAtuados)
             {
-                Console.WriteLine($"Filme: {filme.Titulo};\n{filme.Detalhes}\n");
+                Console.WriteLine($"{filme.Titulo};");
             }
         }
         else

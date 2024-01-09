@@ -14,13 +14,14 @@ internal class MenuExibirFilmografia : Menu
         {
             Artista artista = artistas[nome];
             artista.ExibirFilmesAtuados();
+            Console.WriteLine(artista.Detalhes);
             Console.Write("\nPressione qualquer tecla para voltar ao menu principal.");
             Console.ReadKey();
             Console.Clear();
         }
         else
         {
-            Console.Write("\nEsse artista ainda não registrado!");
+            Console.Write("\nEsse artista ainda não foi registrado!");
             Thread.Sleep(2000);
             Console.Clear();
         }

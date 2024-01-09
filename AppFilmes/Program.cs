@@ -1,4 +1,5 @@
-﻿using AppFilmes.Modelos;
+﻿using AppFilmes.Menus;
+using AppFilmes.Modelos;
 
 Filme ronins = new("47 Ronins")
 {
@@ -105,244 +106,53 @@ void ExibirMenu()
     switch (opcaoEscolhida)
     {
         case 0:
-            Console.WriteLine("\nSaindo...");
+            MenuSair menu0 = new MenuSair();
+            menu0.Executar();
             break;
         case 1:
-            ExibirFilmes();
+            MenuExibirFilmes menu1 = new MenuExibirFilmes();
+            menu1.Executar(filmes);
+            ExibirMenu();
             break;
         case 2:
-            ExibirArtistas();
+            MenuExibirArtistas menu2 = new MenuExibirArtistas();
+            menu2.Executar(artistas);
+            ExibirMenu();
             break;
         case 3:
-            RegistrarFilme();
+            MenuRegistrarFilme menu3 = new MenuRegistrarFilme();
+            menu3.Executar(filmes);
+            ExibirMenu();
             break;
         case 4:
-            RegistrarArtista();
+            MenuRegistrarArtista menu4 = new MenuRegistrarArtista();
+            menu4.Executar(artistas);
+            ExibirMenu();
             break;
         case 5:
-            AssociarArtistaAoFilme();
+            MenuAssociarArtistaAoFilme menu5 = new MenuAssociarArtistaAoFilme();
+            menu5.Executar(filmes, artistas);
+            ExibirMenu();
             break;
         case 6:
-            ExibirElencoFilme();
+            MenuExibirElenco menu6 = new MenuExibirElenco();
+            menu6.Executar(filmes);
+            ExibirMenu();
             break;
         case 7:
-            ExibirFilmografia();
+            MenuExibirFilmografia menu7 = new MenuExibirFilmografia();
+            menu7.Executar(artistas);
+            ExibirMenu();
             break;
         case 8:
-            AvaliarFilme();
+            MenuAvaliarFilme menu8 = new MenuAvaliarFilme();
+            menu8.Executar(filmes);
+            ExibirMenu();
             break;
         default:
             Console.Write("\nOpção inválida!");
             break;
     }
-}
-
-void ExibirTitulo(string titulo)
-{
-    int quantidadeCaractere = titulo.Length;
-    string asteriscos = string.Empty.PadLeft(quantidadeCaractere, '*');
-    Console.WriteLine(asteriscos);
-    Console.WriteLine(titulo);
-    Console.WriteLine($"{asteriscos}\n");
-}
-
-void ExibirFilmes()
-{
-    Console.Clear();
-    ExibirTitulo("Listagem de filmes");
-    if (filmes.Count > 0)
-    {
-        foreach (Filme filme in filmes.Values)
-        {
-            Console.WriteLine($"Título: {filme.Titulo};");
-        }
-    }
-    else
-    {
-        Console.WriteLine("Nenhum filme foi registrado!");
-    }
-    Console.Write("\nPressione qualquer tecla para voltar ao menu principal.");
-    Console.ReadKey();
-    Console.Clear();
-    ExibirMenu();
-}
-
-void ExibirArtistas()
-{
-    Console.Clear();
-    //Console.WriteLine("Listagem de artistas\n");
-    ExibirTitulo("Listagem de artistas");
-    if (artistas.Count > 0)
-    {
-        foreach (Artista artista in artistas.Values)
-        {
-            Console.WriteLine($"Nome: {artista.Nome};");
-        }
-    }
-    else
-    {
-        Console.WriteLine("Nenhum artista foi registrado!");
-    }
-    Console.Write("\nPressione qualquer tecla para voltar ao menu principal.");
-    Console.ReadKey();
-    Console.Clear();
-    ExibirMenu();
-}
-
-void RegistrarFilme()
-{
-    Console.Clear();
-    ExibirTitulo("Registro de filmes");
-    Console.Write("Digite o título do filme que deseja registrar: ");
-    string tituloFilme = Console.ReadLine()!;
-    Console.Write("Digite a duração do filme (minutos): ");
-    double duracaoFilme = double.Parse(Console.ReadLine()!);
-    if (filmes.ContainsKey(tituloFilme))
-    {
-        Console.WriteLine("\nEsse filme já foi registrado!");
-    }
-    else
-    {
-        Filme filme = new Filme(tituloFilme)
-        {
-            Duracao = duracaoFilme
-        };
-        filmes.Add(filme.Titulo, filme);
-        Console.Write("\nFilme registrado com sucesso!");
-    }
-    Thread.Sleep(2000);
-    Console.Clear();
-    ExibirMenu();
-}
-
-void RegistrarArtista()
-{
-    Console.Clear();
-    ExibirTitulo("Registro de artistas");
-    Console.Write("Digite o nome do artista que deseja registrar: ");
-    string nomeArtista = Console.ReadLine()!;
-    Console.Write("Digite a idade do artista: ");
-    int idadeArtista = int.Parse(Console.ReadLine()!);
-    if (artistas.ContainsKey(nomeArtista))
-    {
-        Console.WriteLine("\nEsse artista já foi registrado!");
-    }
-    else
-    {
-        Artista artista = new Artista(nomeArtista)
-        {
-            Idade = idadeArtista
-        };
-        artistas.Add(artista.Nome, artista);
-        Console.Write("\nArtista registrado com sucesso!");
-    }
-    Thread.Sleep(2000);
-    Console.Clear();
-    ExibirMenu();
-}
-
-void AssociarArtistaAoFilme()
-{
-    Console.Clear();
-    ExibirTitulo("Associação de artistas a filmes");
-    Console.Write("Digite o nome do filme que deseja associar um artista: ");
-    string nomeFilme = Console.ReadLine()!;
-    if (filmes.ContainsKey(nomeFilme))
-    {
-        Console.Write("Digite o nome do artista que deseja associar: ");
-        string nomeArtista = Console.ReadLine()!;
-        if (artistas.ContainsKey(nomeArtista))
-        {
-            Artista artista = artistas[nomeArtista];
-            Filme filme = filmes[nomeFilme];
-            filme.AdicionarArtista(new Artista(artista.Nome) { Idade = artista.Idade });
-            artista.AdicionarFilme(new Filme(filme.Titulo) { Duracao = filme.Duracao });
-            Console.Write("\nArtista associado com sucesso!");
-        }
-        else
-        {
-            Console.Write("\nEsse artista ainda não foi registrado!");
-        }
-
-    }
-    else
-    {
-        Console.Write("\nEsse filme ainda não foi registrado!");
-    }
-    Thread.Sleep(2000);
-    Console.Clear();
-    ExibirMenu();
-}
-
-void ExibirElencoFilme()
-{
-    Console.Clear();
-    ExibirTitulo("Exibição de elenco");
-    Console.Write("Digite o nome do filme que deseja ver o elenco: ");
-    string nomeFilme = Console.ReadLine()!;
-    if (filmes.ContainsKey(nomeFilme))
-    {
-        Filme filme = filmes[nomeFilme];
-        filme.ExibirElenco();
-        Console.Write("\nPressione qualquer tecla para voltar ao menu principal.");
-        Console.ReadKey();
-        Console.Clear();
-        ExibirMenu();
-    }
-    else
-    {
-        Console.Write("\nEsse filme ainda não foi registrado!");
-        Thread.Sleep(2000);
-        Console.Clear();
-        ExibirMenu();
-    }
-}
-
-void ExibirFilmografia()
-{
-    Console.Clear();
-    ExibirTitulo("Exibição da filmografia");
-    Console.Write("Digite o nome do artista que deseja ver a filmografia: ");
-    string nome = Console.ReadLine()!;
-    if (artistas.ContainsKey(nome))
-    {
-        Artista artista = artistas[nome];
-        artista.ExibirFilmesAtuados();
-        Console.Write("\nPressione qualquer tecla para voltar ao menu principal.");
-        Console.ReadKey();
-        Console.Clear();
-        ExibirMenu();
-    }
-    else
-    {
-        Console.Write("\nEsse artista ainda não registrado!");
-        Thread.Sleep(2000);
-        Console.Clear();
-        ExibirMenu();
-    }
-}
-
-void AvaliarFilme()
-{
-    Console.Clear();
-    ExibirTitulo("Avaliação de filmes");
-    Console.Write("Digite o nome do filme que deseja avaliar: ");
-    string nomeFilme = Console.ReadLine()!;
-    if (filmes.ContainsKey(nomeFilme))
-    {
-        Console.Write($"Digite uma para o filme {nomeFilme}: ");
-        Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
-        Filme filme = filmes[nomeFilme];
-        filme.AdicionarNota(nota);
-        Console.WriteLine("\nFilme avaliado com sucesso!");
-    } else
-    {
-        Console.WriteLine("\nEsse filme ainda não foi registrado!");
-    }
-
-    Thread.Sleep(2000);
-    Console.Clear();
-    ExibirMenu();
 }
 
 ExibirMenu();

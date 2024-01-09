@@ -16,11 +16,11 @@ internal class MenuAvaliarFilme : Menu
             Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
             Filme filme = filmes[nomeFilme];
             filme.AdicionarNota(nota);
-            Console.WriteLine("\nFilme avaliado com sucesso!");
+            Console.Write("\nFilme avaliado com sucesso!");
         }
         else
         {
-            Console.WriteLine("\nEsse filme ainda não foi registrado!");
+            Console.Write("\nEsse filme ainda não foi registrado!");
         }
 
         Thread.Sleep(2000);

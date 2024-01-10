@@ -1,0 +1,37 @@
+[
+  {
+      "title": "47 Ronins",
+      "duration_min": "119",
+      "year": "2013",
+      "crew": "Carl Rinsch (dir.), Keanu Reeves, Hiroyuki Sanda",
+      "imDbRating": "6.2",
+  },
+  {
+      "title": "A Viagem de Chihiro",
+      "duration_min": "125",
+      "year": "2001",
+      "crew": "Hayao Miyazaki (dir.), Rumi Hiiragi, Miyu Irino",
+      "imDbRating": "6.2",
+  },
+  {
+      "title": "Blade Runner - O Caçador de Androides",
+      "duration_min": "117",
+      "year": "1982",
+      "crew": "Ridley Scott (dir.), Harrison Ford, Sean Young",
+      "imDbRating": "8.1",
+  },
+  {
+      "title": "Constantine",
+      "duration_min": "221",
+      "year": "2005",
+      "crew": "Francis Lawrence (dir.), Keanu Reeves, Rachel Weisz",
+      "imDbRating": "7",
+  },
+  {
+      "title": "Logan",
+      "duration_min": "137",
+      "year": "2017",
+      "crew": "James Mangold (dir.), Hugh Jackman, Dafne Keen",
+      "imDbRating": "8.1",
+  }
+]

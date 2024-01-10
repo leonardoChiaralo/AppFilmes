@@ -1,6 +1,6 @@
 ﻿namespace AppFilmes.Modelos;
 
-class Filme
+class Filme : IAvaliavel
 {
     public Filme(string titulo)
     {

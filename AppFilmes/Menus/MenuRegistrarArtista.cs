@@ -1,10 +1,11 @@
-﻿using AppFilmes.Modelos;
+﻿using AppFilmes.Menus;
+using AppFilmes.Modelos;
 
 namespace AppFilmes.Menus;
 
 internal class MenuRegistrarArtista : Menu
 {
-    public override void Executar(Dictionary<string, Filme> filmes, Dictionary<string, Artista> artistas)
+    public override void Executar(List<Filme> filmes, List<Artista> artistas)
     {
         base.Executar(filmes, artistas);
         ExibirTitulo("Registro de artistas");
@@ -12,17 +13,20 @@ internal class MenuRegistrarArtista : Menu
         string nomeArtista = Console.ReadLine()!;
         Console.Write("Digite a idade do artista: ");
         int idadeArtista = int.Parse(Console.ReadLine()!);
-        if (artistas.ContainsKey(nomeArtista))
+        var todosNomesArtistas = artistas.Select(artista => artista.Nome).Distinct().ToList();
+        if (todosNomesArtistas.Contains(nomeArtista))
         {
-            Console.WriteLine("\nEsse artista já foi registrado!");
+            Console.Write("\nEsse artista já foi registrado!");
         }
         else
         {
-            Artista artista = new Artista(nomeArtista)
+            Artista artista = new()
             {
+                Nome = nomeArtista,
                 Idade = idadeArtista
             };
-            artistas.Add(artista.Nome, artista);
+            artistas.Add(artista);
+            artista.GerarArquivoJson(artistas);
             Console.Write("\nArtista registrado com sucesso!");
         }
         Thread.Sleep(2000);

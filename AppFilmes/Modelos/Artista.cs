@@ -1,37 +1,44 @@
-﻿namespace AppFilmes.Modelos;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
-class Artista
+namespace AppFilmes.Modelos;
+
+internal class Artista
 {
-    public Artista(string nome)
-    {
-        Nome = nome;
-    }
+    [JsonPropertyName("name")]
+    public string? Nome { get; set; }
 
-    public string Nome { get; }
+    [JsonPropertyName("age")]
     public int Idade { get; set; }
-    public string Detalhes => $"\n{Nome} tem {Idade} anos.";
 
-    private List<Filme> filmesAtuados { get; set; } = new List<Filme>();
+    [JsonPropertyName("filmography")]
+    public List<string> Filmografia { get; set; } = new();
 
-    public void AdicionarFilme(Filme filme)
+    [JsonIgnore]
+    public string? Detalhes => $"\n{Nome} tem {Idade} anos.";
+
+
+    public void ExibirFilmografia()
     {
-        filmesAtuados.Add(filme);
-    }
-
-    public void ExibirFilmesAtuados()
-    {
-        Console.WriteLine("\nFILMOGRAFIA:");
-        if (filmesAtuados.Count > 0)
+        Console.WriteLine("\nFilmografia:");
+        if (Filmografia.Count > 0)
         {
-            foreach (Filme filme in filmesAtuados)
+            foreach (var filme in Filmografia)
             {
-                Console.WriteLine($"{filme.Titulo};");
+                Console.WriteLine($"- {filme}");
             }
         }
         else
         {
-            Console.WriteLine("VAZIA");
+            Console.WriteLine("------");
         }
+    }
 
+    public void GerarArquivoJson(List<Artista> artistas)
+    {
+        string json = JsonSerializer.Serialize(artistas);
+        string nomeDoArquivo = $"artists.json";
+
+        File.WriteAllText(nomeDoArquivo, json);
     }
 }

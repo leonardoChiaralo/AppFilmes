@@ -1,128 +1,72 @@
 ﻿using AppFilmes.Menus;
 using AppFilmes.Modelos;
+using System.Text.Json;
 
-Filme ronins = new("47 Ronins")
+using (HttpClient client = new HttpClient())
 {
-    Duracao = 119
-};
-Filme chihiro = new("A Viagem de Chihiro")
-{
-    Duracao = 125
-};
-Filme bladeRunner = new("Blade Runner")
-{
-    Duracao = 117
-};
-Filme constantine = new("Constantine")
-{
-    Duracao = 221
-};
-Filme logan = new("Logan")
-{
-    Duracao = 137
-};
+    try
+    {
+        string filePathMovies = "C:\\Users\\leonardo.chiaralo\\Documents\\C# Alura\\C# projetos\\AppFilmes\\AppFilmes\\bin\\Debug\\net7.0\\movies.json";
+        string respostaFilmes = await File.ReadAllTextAsync(filePathMovies);
+        var filmes = JsonSerializer.Deserialize<List<Filme>>(respostaFilmes)!;
 
-Artista sanada = new("Hiroyuki Sanada")
-{
-    Idade = 63
-};
-Artista hiiragi = new("Rumi Hiiragi")
-{
-    Idade = 36
-};
-Artista ford = new("Harrison Ford")
-{
-    Idade = 81
-};
-Artista reeves = new("Keanu Reeves")
-{
-    Idade = 59
-};
-Artista jackman = new("Hugh Jackman")
-{
-    Idade = 55
-};
+        string filePathArtists = "C:\\Users\\leonardo.chiaralo\\Documents\\C# Alura\\C# projetos\\AppFilmes\\AppFilmes\\bin\\Debug\\net7.0\\artists.json";
+        string repostaArtistas = await File.ReadAllTextAsync(filePathArtists);
+        var artistas = JsonSerializer.Deserialize<List<Artista>>(repostaArtistas)!;
 
-Dictionary<string, Filme> filmes = new();
-Dictionary<string, Artista> artistas = new();
-Dictionary<int, Menu> opcoes = new();
-opcoes.Add(0, new MenuSair());
-opcoes.Add(1, new MenuRegistrarFilme());
-opcoes.Add(2, new MenuRegistrarArtista());
-opcoes.Add(3, new MenuAssociarArtistaAoFilme());
-opcoes.Add(4, new MenuAvaliarFilme());
-opcoes.Add(5, new MenuExibirFilmes());
-opcoes.Add(6, new MenuExibirArtistas());
-opcoes.Add(7, new MenuExibirDetalhesDoFilme());
-opcoes.Add(8, new MenuExibirFilmografia());
+        Dictionary<int, Menu> opcoes = new();
+        opcoes.Add(0, new MenuSair());
+        opcoes.Add(1, new MenuExibirFilmes());
+        opcoes.Add(2, new MenuExibirArtistas());
+        opcoes.Add(3, new MenuExibirDetalhesDoFilme());
+        opcoes.Add(4, new MenuExibirFilmografia());
+        opcoes.Add(5, new MenuRegistrarFilme());
+        opcoes.Add(6, new MenuRegistrarArtista());
+        opcoes.Add(7, new MenuAssociarArtistaAoFilme());
 
-
-filmes.Add(ronins.Titulo, ronins);
-filmes.Add(chihiro.Titulo, chihiro);
-filmes.Add(bladeRunner.Titulo, bladeRunner);
-filmes.Add(constantine.Titulo, constantine);
-filmes.Add(logan.Titulo, logan);
-
-artistas.Add(sanada.Nome, sanada);
-artistas.Add(hiiragi.Nome, hiiragi);
-artistas.Add(ford.Nome, ford);
-artistas.Add(reeves.Nome, reeves);
-artistas.Add(jackman.Nome, jackman);
-
-ronins.AdicionarArtista(sanada);
-ronins.AdicionarArtista(reeves);
-sanada.AdicionarFilme(ronins);
-reeves.AdicionarFilme(ronins);
-
-chihiro.AdicionarArtista(hiiragi);
-hiiragi.AdicionarFilme(chihiro);
-
-bladeRunner.AdicionarArtista(ford);
-ford.AdicionarFilme(bladeRunner);
-
-constantine.AdicionarArtista(reeves);
-reeves.AdicionarFilme(constantine);
-
-logan.AdicionarArtista(jackman);
-jackman.AdicionarFilme(logan);
-
-void ExibirLogo()
-{
-    Console.WriteLine(@"
+        void ExibirLogo()
+        {
+            Console.WriteLine(@"
 ███████╗██╗██╗░░░░░███╗░░░███╗░█████╗░░██████╗░██████╗░░█████╗░███████╗██╗██╗░░░░░███╗░░░███╗███████╗
 ██╔════╝██║██║░░░░░████╗░████║██╔══██╗██╔════╝░██╔══██╗██╔══██╗██╔════╝██║██║░░░░░████╗░████║██╔════╝
 █████╗░░██║██║░░░░░██╔████╔██║██║░░██║██║░░██╗░██████╔╝███████║█████╗░░██║██║░░░░░██╔████╔██║█████╗░░
 ██╔══╝░░██║██║░░░░░██║╚██╔╝██║██║░░██║██║░░╚██╗██╔══██╗██╔══██║██╔══╝░░██║██║░░░░░██║╚██╔╝██║██╔══╝░░
 ██║░░░░░██║███████╗██║░╚═╝░██║╚█████╔╝╚██████╔╝██║░░██║██║░░██║██║░░░░░██║███████╗██║░╚═╝░██║███████╗
 ╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝░╚════╝░░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚══════╝");
-    Console.WriteLine("Bem vindo ao Filmografilme!\n");
-}
+            Console.WriteLine("Bem vindo ao Filmografilme!\n");
+        }
 
-void ExibirMenu()
-{
-    ExibirLogo();
-    Console.WriteLine("Digite 1 para registrar um filme;");
-    Console.WriteLine("Digite 2 para registrar um artista;");
-    Console.WriteLine("Digite 3 para associar um artista a um filme;");
-    Console.WriteLine("Digite 4 para avaliar um filme;");
-    Console.WriteLine("Digite 5 para exibir a lista de filmes;");
-    Console.WriteLine("Digite 6 para exibir a lista de artistas;");
-    Console.WriteLine("Digite 7 para exibir os detalhes de um filme;");
-    Console.WriteLine("Digite 8 para exibir a filmografia de um artista;");
-    Console.WriteLine("Digite 0 para sair.\n");
+        void ExibirMenu()
+        {
+            ExibirLogo();
+            Console.WriteLine("Digite 1 para exibir a lista de todos os filmes;");
+            Console.WriteLine("Digite 2 para exibir a lista de todos os artistas;");
+            Console.WriteLine("Digite 3 para exibir os detalhes de um filme;");
+            Console.WriteLine("Digite 4 para exibir a filmografia de um artista;");
+            Console.WriteLine("Digite 5 para registrar um filme na lista;");
+            Console.WriteLine("Digite 6 para registrar um artista na lista;");
+            Console.WriteLine("Digite 7 para associar um artista a um filme;");
+            Console.WriteLine("Digite 0 para sair.\n");
 
-    Console.Write("Digita a opção escolhida: ");
-    int opcaoEscolhida = int.Parse(Console.ReadLine()!);
+            Console.Write("Digita a opção escolhida: ");
+            int opcaoEscolhida = int.Parse(Console.ReadLine()!);
 
-    if (opcoes.ContainsKey(opcaoEscolhida))
+            if (opcoes.ContainsKey(opcaoEscolhida))
+            {
+                Menu menuASerExibido = opcoes[opcaoEscolhida];
+                menuASerExibido.Executar(filmes, artistas);
+                if (opcaoEscolhida > 0) ExibirMenu();
+            }
+            else
+            {
+                Console.Write("\nOpção inválida!");
+            }
+        }
+
+        ExibirMenu();
+    }
+    catch (Exception ex)
     {
-        Menu menuASerExibido = opcoes[opcaoEscolhida];
-        menuASerExibido.Executar(filmes, artistas);
-        if (opcaoEscolhida > 0) ExibirMenu();
-    } else
-    {
-        Console.Write("\nOpção inválida!");
+        Console.WriteLine($"Temos um problema: {ex.Message}");
     }
 }
-
-ExibirMenu();

@@ -1,38 +1,40 @@
-﻿using AppFilmes.Modelos;
+﻿using AppFilmes.Filtros;
+using AppFilmes.Menus;
+using AppFilmes.Modelos;
 
 namespace AppFilmes.Menus;
 
 internal class MenuAssociarArtistaAoFilme : Menu
 {
-    public override void Executar(Dictionary<string, Filme> filmes, Dictionary<string, Artista> artistas)
+    public override void Executar(List<Filme> filmes, List<Artista> artistas)
     {
         base.Executar(filmes, artistas);
         ExibirTitulo("Associação de artistas a filmes");
         Console.Write("Digite o nome do filme que deseja associar um artista: ");
         string nomeFilme = Console.ReadLine()!;
-        if (filmes.ContainsKey(nomeFilme))
+        var todosTitulosFilmes = filmes.Select(filme => filme.Titulo).Distinct().ToList();
+        if (todosTitulosFilmes.Contains(nomeFilme))
         {
-            Console.Write("Digite o nome do artista que deseja associar: ");
+            Console.Write($"Digite o nome do artista que deseja associar ao filme {nomeFilme}: ");
             string nomeArtista = Console.ReadLine()!;
-            if (artistas.ContainsKey(nomeArtista))
+            var todosNomesArtistas = artistas.Select(artista => artista.Nome).Distinct().ToList();
+            if (todosNomesArtistas.Contains(nomeArtista))
             {
-                Artista artista = artistas[nomeArtista];
-                Filme filme = filmes[nomeFilme];
-                filme.AdicionarArtista(artista) ;
-                artista.AdicionarFilme(filme);
-                Console.Write("\nArtista associado com sucesso!");
+                LinqFilter.FiltrarElencoPorTitulo(filmes, nomeFilme, nomeArtista);
+                LinqFilter.FiltrarFilmografiaPorNome(artistas, nomeFilme, nomeArtista);
             }
             else
             {
-                Console.Write("\nEsse artista ainda não foi registrado!");
+                Console.WriteLine("\nEsse artista ainda não foi registrado!");
+                Thread.Sleep(2000);
+                Console.Clear();
             }
-
         }
         else
         {
             Console.Write("\nEsse filme ainda não foi registrado!");
+            Thread.Sleep(2000);
+            Console.Clear();
         }
-        Thread.Sleep(2000);
-        Console.Clear();
     }
 }

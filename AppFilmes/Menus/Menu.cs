@@ -6,14 +6,14 @@ internal class Menu
 {
     public void ExibirTitulo(string titulo)
     {
-        int quantidadeCaractere = titulo.Length;
-        string asteriscos = string.Empty.PadLeft(quantidadeCaractere, '*');
+        int quantidaeCaractere = titulo.Length;
+        string asteriscos = string.Empty.PadLeft(quantidaeCaractere, '*');
         Console.WriteLine(asteriscos);
         Console.WriteLine(titulo);
         Console.WriteLine($"{asteriscos}\n");
     }
 
-    public virtual void Executar (Dictionary<string, Filme> filmes, Dictionary<string, Artista> artistas)
+    public virtual void Executar(List<Filme> filmes, List<Artista> artistas)
     {
         Console.Clear();
     }

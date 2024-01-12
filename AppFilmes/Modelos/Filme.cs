@@ -1,48 +1,50 @@
-﻿namespace AppFilmes.Modelos;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
-class Filme : IAvaliavel
+namespace AppFilmes.Modelos;
+
+internal class Filme
 {
-    public Filme(string titulo)
-    {
-        Titulo = titulo;
-    }
-    public string Titulo { get; }
-    public double Duracao { get; set; }
-    public double Media
-    {
-        get
-        {
-            if (notas.Count == 0) return 0;
-            else return notas.Average(a => a.Nota);
-        }
-    }
-    public string Detalhes => $"\nO filme {Titulo} tem duração de {Duracao} minutos, com avaliação {Media}.";
+    [JsonPropertyName("title")]
+    public string? Titulo { get; set; }
 
-    private List<Artista> elenco = new List<Artista>();
-    private List<Avaliacao> notas = new List<Avaliacao>();
+    [JsonPropertyName("year")]
+    public string? Ano { get; set; }
 
-    public void AdicionarArtista(Artista artista)
-    {
-        elenco.Add(artista);
-    }
+    [JsonPropertyName("duration_min")]
+    public int Duracao { get; set; }
 
-    public void AdicionarNota(Avaliacao nota)
-    {
-        notas.Add(nota);
-    }
+    [JsonPropertyName("imDbRating")]
+    public string? Nota { get; set; }
+
+    [JsonPropertyName("crew")]
+    public List<string> Elenco { get; set; } = new();
+
+    [JsonIgnore]
+    public string Detalhes => $"\nO filme {Titulo} foi lançado em {Ano}, com duração de {Duracao} minutos e avaliação {Nota} no IMDB.";
+
 
     public void ExibirElenco()
     {
-        Console.WriteLine("\nELENCO:");
-        if (elenco.Count > 0 )
+        Console.WriteLine("\nElenco:");
+        if (Elenco.Count > 0)
         {
-            foreach (Artista artista in elenco)
+            foreach (var artista in Elenco)
             {
-                Console.WriteLine($"{artista.Nome};");
+                Console.WriteLine($"- {artista}");
             }
-        } else
-        {
-            Console.WriteLine("VAZIA");
         }
+        else
+        {
+            Console.WriteLine("------");
+        }
+    }
+
+    public void GerarArquivoJson(List<Filme> filmes)
+    {
+        string json = JsonSerializer.Serialize(filmes);
+        string nomeDoArquivo = $"movies.json";
+
+        File.WriteAllText(nomeDoArquivo, json);
     }
 }
